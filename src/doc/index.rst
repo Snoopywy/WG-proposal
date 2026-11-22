@@ -66,6 +66,7 @@ Before a service lets an agent act, it needs to know what the agent is permitted
 AI Agent poses the following challenges for authorization and privilege management, grouped into two core questions.
 
 **How to authorize.** An agent is self-determining: it decides what is "relevant", its context and risk change at runtime, and its actions can drift from the purpose for which it was granted authority. How should an authorization decision be made so that it reflects the agent's actual context, purpose and risk, stays valid only as long as those hold, and can be checked and reproduced by the parties that rely on it? Meanwhile, multi-level authorization is also one of the recurring and under-specified cases.
+
 **How to manage privileges.** An agent's privileges pass through many states over one task - granted, elevated, restricted, hibernated, reactivated, revoked - and across agents and trust domains. How should those state transitions be governed so that an agent holds only the privileges it needs, precisely when it needs them, and loses them completely when the task ends?
 
 Existing work addresses agent identity (ITU-T X.1285 series, X.AIA-dii-req, X.dpidm-aAI), access control and enforcement (themes #4 and #6, joined in #36), provenance of authority (themes #5 and #15) and remote attestation (theme #22). None of it specifies a security framework and requirements for authorization and privilege lifecycle management of AI agents.
@@ -83,7 +84,9 @@ Its pre-standardization work builds on existing specifications toward open, inte
 The Working Group describes how to authorize, how to delegate authorization across agents, and how to manage privileges, and maps existing building blocks and remaining gaps (Deliverable 1).
 
 **How to authorize**: The Working Group specifies requirements for the authorization of AI agents - how an agent's authority is granted, under what conditions and for how long, and how the decision is rendered, enforced, bound to the agent's purpose and context, and audited (Deliverable 2).
+
 **How to multi-level authorization**: The Working Group analyses multi-level authorization - how a principal's authority is attenuated, bound to each agent's identity and key, and selectively disclosed across agents (Deliverable 3).
+
 **How to manage privileges**: The Working Group specifies requirements for the privilege lifecycle of AI agents - how privileges are initialized, changed, hibernated, activated, and revoked and recovered, with full-lifecycle governance (Deliverable 4).
 
 The Working Group will build on previous work and the state of the art, including the ITU-T X.1250 series, X.dac-aa, OAuth 2.0, GNAP, and IETF RATS and WIMSE, adding further work as it starts.
@@ -149,7 +152,7 @@ Out of Scope
     * - TBD (within the FG-TIDA lifetime)
       - Deliverables 1 to 4 submitted to the FG-TIDA plenary in time for SG17.
 
-## 7\. Coordination, Dependencies and Liaisons
+7\. Coordination, Dependencies and Liaisons
 ----------------------------------------------
 .. list-table::
     :header-rows: 1
@@ -196,7 +199,7 @@ Out of Scope
     * - ISO/IEC, ETSI, NIST, IEEE
       - ISO/IEC 29146, 42001, 23894, 22989; ETSI SAI 001/005; NIST AI RMF, SP 800-162; IEEE 7001, 7009, 802.1AR.
 
-## 8\. Terminology
+8\. Terminology
 ------------------
 The working group will use the common FG-TIDA terminology where applicable. New terms will be communicated to the FG-TIDA terminology and use cases working group.
 
