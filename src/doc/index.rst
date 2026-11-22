@@ -53,7 +53,7 @@ Proposed Working Group Charter: Authorization and Privilege Management for AI Ag
     * - Working methods
       - Consensus as in the FG-TIDA Terms of Reference, co-chairs, empowered editors, and workshops or webinars where useful
     * - Charter status and version
-      - Draft 0.2
+      - Draft 0.1
 
 2\. Background and Problem Statement
 ------------------------------------
