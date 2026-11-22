@@ -13,177 +13,222 @@
 
 .. only:: html
 
-    .. admonition:: This is a document template
-        :class: tip
 
-        Replace the ``<placeholders>`` and the *lorem ipsum* text throughout with
-        your own content. This landing page is the document's front matter:
-
-        * **Abstract**, **History**, **Authors**, **Keywords** and **Foreword**
-          are standard front-matter sections — keep them and fill them in.
-        * **Chapters 1–4** demonstrate the authoring system (text, figures,
-          tables, diagrams, and API references). Read them, then replace their
-          content with your specification.
-
-        This notice appears on the web version only; it is excluded from the
-        published PDF. See the project ``CONTRIBUTING`` guide for how to build and publish.
-
-Title of this document
-========================
+Proposed Working Group Charter: Authorization and Privilege Management for AI Agents (APMA)
+===========================================================================================
 
 .. only:: html
 
-    **<subtitle of this document>**
+    **Authorization and Privilege Management for AI Agents (APMA) Charter**
 
 .. raw:: latex
 
     \begin{center}\textbf{<subtitle of this document>}\end{center}
 
-Abstract
---------
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-
-History
--------
+1\. Group Information
+---------------------
 
 .. list-table::
     :header-rows: 1
-    :widths: 10 26 18 14 32
+    :widths: 30 70
 
-    * - Version
-      - Document
-      - Approval
-      - Focus Group
-      - Working Group
-    * - <version>
-      - <title>
-      - <date>
-      - TIDA
-      - <acronym>
+    * - Field
+      - Content
+    * - Working group name and acronym
+      - Authorization and Privilege Management for AI Agents (APMA), working title|
+    * - Basis
+      - Theme #23 "Security framework and requirements for authorization and privilege lifecycle management of AI agents", presented at the FG-TIDA preparation meeting of 30 September 2026
+    * - FG-TIDA theme(s) covered
+      - Theme #23, with coordination and dependencies on themes #4, #5, #6, #22, #36 and related themes (see Section 7)
+    * - Chair(s) / co-chairs
+      - TBD
+    * - Editor(s) of the main deliverables
+      - TBD
+    * - Theme proposers
+      - Ye Tao, Ying Wang (China Unicom)
+    * - Mailing list
+      - TBD
+    * - Repository and issue tracker
+      - TBD
+    * - Working methods
+      - Consensus as in the FG-TIDA Terms of Reference, co-chairs, empowered editors, and workshops or webinars where useful
+    * - Charter status and version
+      - Draft 0.2
 
-To access this Document as a PDF, open the published documentation site in your web
-browser and click the PDF download link, or navigate directly to
-https://debora-com.github.io/CUTEspecs/specification.pdf.
+2\. Background and Problem Statement
+------------------------------------
+AI agents act on behalf of users, services or organizations, and their privileges are not static: they are created and bound at initialization, adjusted as a task progresses, suspended and isolated during hibernation, re-validated and restored upon activation, and fully revoked and recovered when the task completes or the agent terminates. This sequence of state transitions is the privilege lifecycle.
 
-Authors
--------
+Authorization and privilege lifecycle management are tightly coupled: authorization precedes and determines the granting of privileges, and privilege lifecycle management governs the states those granted privileges pass through, from grant to revocation.
+
+Before a service lets an agent act, it needs to know what the agent is permitted to do, for how long, and under what conditions, and to withdraw that permission when the conditions change or the task ends. Today this is decided piecemeal: by identity checks that say little about behaviour, by access-control rules written for conventional software, by tokens that are not bound to a task's scope or duration, and by revocations that take effect only where an enforcement point checks again. None of these address the two questions at the heart of AI Agent.
+
+AI Agent poses the following challenges for authorization and privilege management, grouped into two core questions.
+
+**How to authorize.** An agent is self-determining: it decides what is "relevant", its context and risk change at runtime, and its actions can drift from the purpose for which it was granted authority. How should an authorization decision be made so that it reflects the agent's actual context, purpose and risk, stays valid only as long as those hold, and can be checked and reproduced by the parties that rely on it? Meanwhile, multi-level authorization is also one of the recurring and under-specified cases.
+**How to manage privileges.** An agent's privileges pass through many states over one task - granted, elevated, restricted, hibernated, reactivated, revoked - and across agents and trust domains. How should those state transitions be governed so that an agent holds only the privileges it needs, precisely when it needs them, and loses them completely when the task ends?
+
+Existing work addresses agent identity (ITU-T X.1285 series, X.AIA-dii-req, X.dpidm-aAI), access control and enforcement (themes #4 and #6, joined in #36), provenance of authority (themes #5 and #15) and remote attestation (theme #22). None of it specifies a security framework and requirements for authorization and privilege lifecycle management of AI agents.
+
+This working group therefore pursues two directions: how to authorize AI agents, and how to manage their privileges over the privilege lifecycle.
+
+The unit of analysis is the privilege an agent holds over a task window, together with the authorization decisions that grant, adjust and revoke it. It is complementary to the enforcement decision for a single action studied by WG2 (IBEA): WG2 decides one action at the moment it is attempted, while this working group manages the privileges that persist across the actions of a task.
+
+3\. Goals
+---------
+The Working Group enables secure authorization and privilege lifecycle management for AI agents whose context and privileges change during their execution.
+
+Its pre-standardization work builds on existing specifications toward open, interoperable and auditable authorization and privilege management, so that services and users can decide whether, when, and to what extent to let an agent act, independent of where the agent runs.
+
+The Working Group describes how to authorize, how to delegate authorization across agents, and how to manage privileges, and maps existing building blocks and remaining gaps (Deliverable 1).
+
+**How to authorize**: The Working Group specifies requirements for the authorization of AI agents - how an agent's authority is granted, under what conditions and for how long, and how the decision is rendered, enforced, bound to the agent's purpose and context, and audited (Deliverable 2).
+**How to multi-level authorization**: The Working Group analyses multi-level authorization - how a principal's authority is attenuated, bound to each agent's identity and key, and selectively disclosed across agents (Deliverable 3).
+**How to manage privileges**: The Working Group specifies requirements for the privilege lifecycle of AI agents - how privileges are initialized, changed, hibernated, activated, and revoked and recovered, with full-lifecycle governance (Deliverable 4).
+
+The Working Group will build on previous work and the state of the art, including the ITU-T X.1250 series, X.dac-aa, OAuth 2.0, GNAP, and IETF RATS and WIMSE, adding further work as it starts.
+
+4\. Scope and Out of Scope
+--------------------------
+
+In Scope
+""""""""
+* The threat model, terminology, use cases and gap analysis for the authorization plane and the privilege lifecycle plane of AI agents.
+* Requirements for the authorization of AI agents: how an agent's authority is granted, under what conditions and for how long, and how the decision is rendered, enforced and audited.
+* Requirements for multi-level authorization: monotonic permission attenuation, binding of grants to agent identity and key, and selective disclosure of authorization information across agents.
+* Requirements for the privilege lifecycle: initialization, change, hibernation, activation, revocation and recovery, and full-lifecycle governance.
+
+Out of Scope
+""""""""""""
+* The working group does not define encodings, schemas, wire formats or protocols.
+* It does not address identity issuance and lifecycle in general (ITU-T X.1285 series).
+* It does not address remote attestation (WG1).
+* It does not address the enforcement mechanics and single-action decision outcomes at an enforcement point (WG2).
+
+5\. Programme of Work and Deliverables
+--------------------------------------
+.. list-table::
+    :header-rows: 1
+    :widths: 10 30 20 10
+
+    * - #
+      - Deliverable
+      - Short description
+      - Input documents
+    * - 1
+      - Problem statement, threats, terminology, use cases and gap analysis (Technical Report)
+      - Threat model for the authorization plane and the privilege lifecycle plane, terminology, use cases, and a gap analysis against the ITU-T X.1250 series, X.dac-aa, OAuth 2.0, GNAP, UMA 2.0 and ISO/IEC 29146.
+      - Deliverable 1
+    * - 2
+      - Security framework and requirements for authorization of AI agents (Technical Specification)
+      - How to authorize AI agents: the authorization decision model — how an agent's authorization is granted, rendered, enforced and audited — and the security requirements on authorization, stated as mandatory and recommended.
+      - Deliverable 2
+    * - 3
+      - Multi-level authorization of AI agents (Technical Report)
+      - How to multi-level authorization across agents: use cases, requirements for monotonic permission attenuation, binding of grants to agent identity and key, and selective disclosure of authorization information, a reference model, and a gap analysis.
+      - Deliverable 3
+    * - 4
+      - Security requirements for privilege lifecycle management of AI agents (Technical Specification)
+      - How to manage privileges: the privilege lifecycle — initialization, change, hibernation, activation, and revocation and recovery — and full-lifecycle governance, stated as mandatory and recommended.
+      - Deliverable 4
+
+6\. Milestones
+--------------
+.. list-table::
+    :header-rows: 1
+    :widths: 40 60
+
+    * - Target date
+      - Milestone
+    * - 2026-12 (Paris)
+      - Charter agreed and outline of Deliverable 1 proposed as working draft.
+    * - 2027-01 (Geneva)
+      - First draft of Deliverable 1 and outlines of Deliverables 2, 3 and 4.
+    * - TBD (3rd FG-TIDA meeting)
+      - Deliverable 1 agreed by the working group; first drafts of Deliverables 2, 3 and 4.
+    * - TBD (within the FG-TIDA lifetime)
+      - Deliverables 1 to 4 submitted to the FG-TIDA plenary in time for SG17.
+
+## 7\. Coordination, Dependencies and Liaisons
+----------------------------------------------
+.. list-table::
+    :header-rows: 1
+    :widths: 30 70
+
+    * - Group / Theme
+      - Coordination or dependency
+    * - Theme #23
+      - The basis of this working group.
+    * - WG2 (IBEA), themes #36, #4, #6
+      - Enforcement. This working group supplies the current privilege state and authorization decision as an input to the enforcement decision for a single action; WG2's outcome can trigger a privilege lifecycle transition. Intent-based authorization coordinates with intent-based policy expression (#6).
+    * - WG1 (CDRA), theme #22
+      - Remote attestation. Attestation results are one input to authorization decisions.
+    * - Themes #5, #15, #9
+      - Provenance of authority. This working group takes the authored authority and its delegation chain as input.
+    * - Themes #42, #43
+      - Evidence grading. This working group specifies the authorization object (issuer, scope, duration); #42/#43 specify how its validity is graded by evidence, kept apart from evidence quality.
+    * - Theme #19
+      - Lifecycle-wide privacy of authorization proof and auditability.
+    * - Theme #31
+      - Preservation of authority boundaries across agent memory and context handoffs; closely related to inter-agent privilege propagation.
+    * - Theme #16
+      - Human oversight control points that authorization's human-approval dimension consumes.
+    * - Theme #26
+      - Cryptographic runtime enforcement boundary, a zero-trust building block.
+    * - Theme #33
+      - Re-evaluation of governed decisions, including privilege grants, when evidence arrives late.
+    * - Theme #29
+      - Governed connection decisions across organizational boundaries, relevant to cross-domain authorization.
+    * - Themes #1, #46
+      - Accountability and attribution: the audit record this working group produces is reconstructed after the fact.
+    * - Themes #45, #34, #25
+      - Delegation and identity anchoring; coordinates with inter-agent privilege propagation.
+    * - FG-TIDA MLDA proposal
+      - Multi-level authorization. Adopted as Deliverable 3: monotonic permission attenuation, binding of grants to agent identity and key, and selective disclosure, with the corresponding gap analysis as input.
+    * - ITU-T SG17 Q10/17
+      - X.1250 series (identity baseline).
+    * - ITU-T SG17 Q7/17, Q16/17
+      - X.S-AIA, X.sr-taimas, XSTR.ltf-AAI (AI agent security).
+    * - IETF
+      - OAuth 2.0 (RFC 6749), Token Exchange (RFC 8693), GNAP (RFC 9635), identity chaining, transaction tokens, RATS/EAT, WIMSE.
+    * - OASIS/Kantara
+      - XACML, UMA 2.0.
+    * - ISO/IEC, ETSI, NIST, IEEE
+      - ISO/IEC 29146, 42001, 23894, 22989; ETSI SAI 001/005; NIST AI RMF, SP 800-162; IEEE 7001, 7009, 802.1AR.
+
+## 8\. Terminology
+------------------
+The working group will use the common FG-TIDA terminology where applicable. New terms will be communicated to the FG-TIDA terminology and use cases working group.
 
 .. list-table::
     :header-rows: 1
-    :widths: 30 40 30
+    :widths: 30 70
 
-    * - Name
-      - Affiliation
-      - Contact
-    * - <Jane Doe>
-      - <Organization / Company>
-      - <jane.doe@example.com>
-    * - <John Smith>
-      - <Organization / Company>
-      - <john.smith@example.com>
+    * - Term
+      - Meaning
+    * - Authorization
+      - An approval granted to a system entity to access a system resource; here, the decision of whether, when, and to what extent an agent may exercise its privileges.
+    * - Privilege
+      - A right that, when granted to an entity, permits the entity to perform an action.
+    * - Privilege lifecycle
+      - The sequence of state transitions a set of privileges undergoes, from creation through modification, hibernation, activation, and revocation and recovery.
+    * - Privilege hibernation
+      - A state in which an agent's privileges are suspended and isolated, not exercisable until a validated reactivation.
+    * - Privilege activation
+      - Restoration of hibernated privileges after mandatory re-assessment against the current authorization context.
+    * - Privilege revocation and recovery
+      - Permanent, cascading removal of privileges, verified across all affected systems.
 
-Keywords
---------
+9\. Working Methods
+-------------------
 
-Lorem, ipsum, dolor, consectetur, adipiscing.
+Each deliverable will be tracked in its own issue in the working group repository. Contributions folded into a deliverable will remain attributed at clause level. Virtual interim calls will be held between plenary meetings.
 
-.. raw:: latex
+10\. Security and Privacy Considerations
+----------------------------------------
 
-    \newpage
-    \osiacenternextsection
+Authorization decisions, privilege states and audit records can disclose sensitive information about agents and the people they act for. All deliverables address what is disclosed to which party, how linkable agents and people become, and what a party learns from a denied or revoked decision. The enforcement and audit surfaces are themselves attack surfaces, including for injected instructions. A suppressed decision must be distinguishable from the absence of any check.
 
-Foreword
---------
-
-Agentic AI systems now act as autonomous entities capable of reasoning, planning, and
-executing tasks across services, infrastructures, and organizational boundaries. This
-fundamentally changes the nature of identity in digital systems: identity is no longer
-limited to human users and static machine instances but must also encompass autonomous,
-dynamic, and goal-oriented agents. And identity alone is insufficient — the core question
-extends beyond "what an entity is" to "whether, and under what conditions, that entity
-should be trusted to act".
-
-The Focus Group on Trust and Identity for humans and agentic AI (FG-TIDA) addresses trust
-management and interoperable digital identity infrastructure for humans and for agentic AI,
-supporting the development of secure, trustworthy digital ecosystems in which humans and
-agentic AI can safely interact and collaborate.
-
-FG-TIDA was established under Recommendation ITU-T A.7 (Focus groups: Establishment and
-working procedures), with ITU-T Study Group 17 as its parent group. Further details are
-available in the group's terms of reference.
-
-For more news and updates about the TIDA Community, including its supporter organizations,
-please refer to the community's published resources.
-
-.. raw:: latex
-
-    \osiacenternextsection
-
-Note
-----
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit
-voluptatem accusantium doloremque laudantium.
-
-.. Intellectual Property Rights — section commented out. To restore it, remove the
-   leading ".." and the indentation below, and re-add a ".. raw:: latex" block with
-   "\osiacenternextsection" before the heading (to centre it on the PDF).
-
-   Intellectual Property Rights
-   ----------------------------
-
-   ITU draws attention to the possibility that the practice or implementation of this
-   Recommendation may involve the use of a claimed Intellectual Property Right. ITU takes no
-   position concerning the evidence, validity or applicability of claimed Intellectual Property
-   Rights, whether asserted by ITU members or others outside of the Recommendation development
-   process.
-
-   As of the date of approval of this Recommendation, ITU had not received notice of intellectual
-   property, protected by patents/software copyrights, which may be required to implement this
-   Recommendation. However, implementers are cautioned that this may not represent the latest
-   information and are therefore strongly urged to consult the appropriate ITU-T databases
-   available via the ITU-T website at http://www.itu.int/ITU-T/ipr/.
-   Implementers should also be aware that the organization that originated the technically
-   equivalent document listed in the Bibliography may have received notices of intellectual
-   property required for the implementation of this Recommendation.
-
-.. raw:: latex
-
-    %% Copyright notice commented out. To restore, uncomment the lines below.
-    %% \vspace{4em}
-    %% \begin{center}\textcopyright{} ITU 2024\end{center}
-    %%
-    %% \medskip
-    %% All rights reserved. No part of this publication may be reproduced, by any means whatsoever, without the
-    %% prior written permission of ITU.
-
-    %% Restore \addcontentsline so the TOC below (and Chapter 1 onward) populate.
-    \let\addcontentsline\osiaorigaddcontentsline
-    \sphinxtableofcontents
-    \osiamainmatter
-
-.. toctree::
-    :maxdepth: 3
-    :numbered:
-    :hidden:
-
-    chapters/01_chapter1
-    chapters/02_chapter2
-    chapters/03_chapter3
-    chapters/04_chapter4/index
-    chapters/05_annex/index
-    chapters/06_appendix/index
-    chapters/07_references
+11\. Success Criteria and Conclusion
+------------------------------------
+The chartered work of the working group ends when all three deliverables are close to completion and the FG-TIDA plenary approves them by consensus. FG-TIDA then dispatches the deliverables to SG17, its parent group, and through liaison statements to other standards bodies and industry consortia, such as the IETF, OASIS, ISO/IEC, ETSI, NIST and IEEE. SG17 and these bodies can complete the standardization.
