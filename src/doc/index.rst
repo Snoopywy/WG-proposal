@@ -17,9 +17,80 @@
 Proposed Working Group Charter: Authorization and Privilege Management for AI Agents (APMA)
 ===========================================================================================
 
-.. only:: html
+.. raw:: latex
 
-    **Authorization and Privilege Management for AI Agents (APMA) Charter**
+    \begin{center}\textbf{Security framework and requirements for authorization and privilege lifecycle management of AI agents}\end{center}
+
+Abstract
+--------
+
+AI agents act on behalf of users, services, and organizations, and the privileges under which they act are not static: they are granted at initialization, adjusted as a task progresses, suspended during hibernation, restored upon activation, and revoked when the task ends. Today this privilege lifecycle is governed piecemeal — by identity checks that say little about behaviour, access-control rules written for conventional software, tokens unbound to a task's scope or duration, and revocations that take effect only where an enforcement point re-checks.
+
+This charter proposes the Authorization and Privilege Management for AI Agents (APMA) working group under FG-TIDA to address two under-specified questions: how to authorize an autonomous agent so that the decision reflects its actual context, purpose, and risk and remains verifiable by the parties that rely on it; and how to manage the privileges an agent holds across its lifecycle so that it holds only what it needs, precisely when it needs it, and loses it completely when the task ends.
+
+Complementary to single-action enforcement (WG2, IBEA) and remote attestation (WG1, CDRA), the working group will produce four deliverables: a technical report on threats, terminology, use cases, and gap analysis; technical specifications for authorization requirements and for privilege lifecycle management (initialization, change, hibernation, activation, revocation and recovery); and a technical report on multi-level authorization covering monotonic permission attenuation, binding of grants to agent identity and key, and selective disclosure across agents.
+
+
+History
+-------
+
+.. list-table::
+    :header-rows: 1
+    :widths: 10 26 18 14 32
+
+    * - Version
+      - Document
+      - Approval
+      - Focus Group
+      - Working Group
+    * - 0.3
+      - Proposed Working Group charter: Authorization and Privilege Management for AI Agents (APMA)
+      - 
+      - TIDA
+      - NWI for Incubation
+
+
+Authors
+-------
+
+.. list-table::
+    :header-rows: 1
+    :widths: 30 40 30
+
+    * - Name
+      - Affiliation
+      - Contact
+    * - Ye Tao
+      - China Unicom
+      - taoy10@chinaunicom.cn
+    * - Ying Wang
+      - China Unicom
+      - wangy2173@chinaunicom.cn
+
+Keywords
+--------
+
+AI agents; authorization; privilege lifecycle management; multi-level authorization; least privilege; revocation; security framework;
+
+.. raw:: latex
+
+    \newpage
+    \osiacenternextsection
+
+Foreword
+--------
+
+This contribution is submitted to the ITU-T Focus Group on Trust and Identity for Humans and Agentic AI (FG-TIDA). Publication in the tracker records a submission and does not imply endorsement or approval by the Focus Group. This paragraph provides tracker context; the technical content below is retained from the source.
+
+.. raw:: latex
+
+    \osiacenternextsection
+
+Note
+----
+
+This document is a Working Group proposal. It is posted and discussed 
+in github FG-TIDA at https://github.com/FG-TIDA/themes/issues/64.
 
 .. raw:: latex
 
@@ -35,11 +106,11 @@ Proposed Working Group Charter: Authorization and Privilege Management for AI Ag
     * - Field
       - Content
     * - Working group name and acronym
-      - Authorization and Privilege Management for AI Agents (APMA), working title|
+      - Authorization and Privilege Management for AI Agents (APMA)|
     * - Basis
       - Theme #23 "Security framework and requirements for authorization and privilege lifecycle management of AI agents", presented at the FG-TIDA preparation meeting of 30 September 2026
     * - FG-TIDA theme(s) covered
-      - Theme #23, with coordination and dependencies on themes #4, #5, #6, #22, #36 and related themes (see Section 7)
+      - Theme #23, #70, #58，open to input from themes #42/#43, #45, #31, #33 (Section 8), and coordination and dependencies on themes #4, #5, #6, #22, #36 and related themes (Section 7)
     * - Chair(s) / co-chairs
       - TBD
     * - Editor(s) of the main deliverables
@@ -53,7 +124,7 @@ Proposed Working Group Charter: Authorization and Privilege Management for AI Ag
     * - Working methods
       - Consensus as in the FG-TIDA Terms of Reference, co-chairs, empowered editors, and workshops or webinars where useful
     * - Charter status and version
-      - Draft 0.1
+      - Draft 0.3
 
 2\. Background and Problem Statement
 ------------------------------------
@@ -108,7 +179,7 @@ Out of Scope
 * It does not address remote attestation (WG1).
 * It does not address the enforcement mechanics and single-action decision outcomes at an enforcement point (WG2).
 
-5\. Programme of Work and Deliverables
+5\. Deliverables
 --------------------------------------
 .. list-table::
     :header-rows: 1
@@ -162,6 +233,10 @@ Out of Scope
       - Coordination or dependency
     * - Theme #23
       - The basis of this working group.
+    * - Themes #70
+      - Multi-level authorization. Adopted as Deliverable 3: monotonic permission attenuation, binding of grants to agent identity and key, and selective disclosure, with the corresponding gap analysis as input.
+    * - Theme #58
+      - Wallet-Anchored Corporate Delegation. Use case as an input to Deliverables 1 and 2.
     * - WG2 (IBEA), themes #36, #4, #6
       - Enforcement. This working group supplies the current privilege state and authorization decision as an input to the enforcement decision for a single action; WG2's outcome can trigger a privilege lifecycle transition. Intent-based authorization coordinates with intent-based policy expression (#6).
     * - WG1 (CDRA), theme #22
@@ -199,28 +274,46 @@ Out of Scope
     * - ISO/IEC, ETSI, NIST, IEEE
       - ISO/IEC 29146, 42001, 23894, 22989; ETSI SAI 001/005; NIST AI RMF, SP 800-162; IEEE 7001, 7009, 802.1AR.
 
-8\. Terminology
+8\. Theme Merge Suggestions
 ------------------
-The working group will use the common FG-TIDA terminology where applicable. New terms will be communicated to the FG-TIDA terminology and use cases working group.
+This section records the recommendations from a traversal of all issues in the FG-TIDA/themes repository (open and closed, including comment threads), assessed against this charter's scope. It is a proposal for discussion: the body of the charter above is unchanged pending agreement on these recommendations. Themes #64 is this charter proposal itself.
 
 .. list-table::
     :header-rows: 1
-    :widths: 30 70
+    :widths: 15 50 10 25
 
     * - Term
-      - Meaning
-    * - Authorization
-      - An approval granted to a system entity to access a system resource; here, the decision of whether, when, and to what extent an agent may exercise its privileges.
-    * - Privilege
-      - A right that, when granted to an entity, permits the entity to perform an action.
-    * - Privilege lifecycle
-      - The sequence of state transitions a set of privileges undergoes, from creation through modification, hibernation, activation, and revocation and recovery.
-    * - Privilege hibernation
-      - A state in which an agent's privileges are suspended and isolated, not exercisable until a validated reactivation.
-    * - Privilege activation
-      - Restoration of hibernated privileges after mandatory re-assessment against the current authorization context.
-    * - Privilege revocation and recovery
-      - Permanent, cascading removal of privileges, verified across all affected systems.
+      - Content suggested for merging
+      - Deliverable(s)
+      - Kept outside APMA
+    * - #23 (basis)
+      - Thread refinements agreed with the proposers: restore conditions declared at suspension time; two-step activation checkpoint (validate the restore condition, then derive intent) with a validation-event audit record (who validated, against which conditions, when); three-state revocation-verification outcome (fully revoked / partially revoked / revocation unverifiable, with compensating controls); a partially-verifiable state for propagated privileges.
+      - 4
+      - -
+    * - #70 (MLDA)
+      - Already adopted as Deliverable 3 (monotonic permission attenuation, binding of grants to agent identity and key, selective disclosure). Confirmed; no further action.
+      - 3
+      - -
+    * - #58
+      - The requirements semantics of wallet-anchored corporate delegation: time-bound EAA mandates, least-privilege machine-readable scopes, mid-transaction revocation propagated to in-flight transactions, and cryptographic binding of each agent action back to the wallet authorization (audit lineage). Provides the corporate/business side to complement MLDA's consumer case.
+      - 1 (use case), 2
+      - -
+    * - #42, #43 (one layered contribution)
+      - The authorization-validity axis (valid, out of scope, expired, unverifiable), independent of evidence quality; the authorization verdict vocabulary (verified / unresolved / rejected / quarantined) with reason codes; MUST-reject failure classes (unresolved distinct from confirmed out-of-scope); the minimum verifiable authorization record; chained composition of verdicts along multi-hop delegations, reporting where a chain breaks.
+      - 2, 3
+      - The evidence-quality grading scale and its appraisal method; that stays with the evidence side (WG1, themes #22/#47).
+    * - #45
+      - The delegation-artefact semantics and its minimum security properties; monotonic re-delegation that never exceeds its source; binding of the delegation to the authenticated agent and request; moment-of-action validity with revocation-observation and freshness requirements; cumulative limits under concurrent agents. Complements MLDA (#70) as the general delegation core.
+      - 2, 3
+      - The subject-continuity identity root and subject-first discovery, which stay with the discovery charter proposal (#62).
+    * - #31
+      - Preservation of authority boundaries and grant restrictions across agent memory, compression, summarization and inter-agent handoffs; what a receiving agent must be able to establish before relying on remembered or transferred authority.
+      - 3 (selective disclosure), 4 (privilege change)
+      - The single-action applicability check at the moment of action, which stays with WG2 (IBEA).
+    * - #33 (closed, content adopted in the #23 thread)
+      - The privilege slice: evidence-driven restriction; staleness distinct from revocation; restore conditions (evidence list, verifying role, validity window) registered at downgrade; governed restoration of privileges.
+      - 4
+      - The general evidence and decision-record contract for non-privilege decisions (connections, attestations, bindings), which remains a liaison.
 
 9\. Working Methods
 -------------------
